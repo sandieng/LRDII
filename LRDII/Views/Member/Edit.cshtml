@@ -1,0 +1,60 @@
+﻿@model LRDII.Models.MemberModel
+
+<h2>Edit</h2>
+
+<h4>Anggota Koperasi LRDII</h4>
+<hr />
+<div class="row">
+    <div class="col-md-8">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="NomorAnggota" />
+            <div class="form-group">
+                <label asp-for="NamaLengkap" class="control-label"></label>
+                <input asp-for="NamaLengkap" class="form-control" />
+                <span asp-validation-for="NamaLengkap" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AlamatLengkap" class="control-label"></label>
+                <input asp-for="AlamatLengkap" class="form-control" />
+                <span asp-validation-for="AlamatLengkap" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NomorHp" class="control-label"></label>
+                <input asp-for="NomorHp" class="form-control" />
+                <span asp-validation-for="NomorHp" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="JenisAnggota" class="control-label"></label>
+                <select asp-for="JenisAnggota" asp-items="Html.GetEnumSelectList<LRDII.Infrastructure.MembershipType>()" class="form-control" >
+                    <option selected="selected" value="">Jenis anggota ...</option>
+                </select>
+                <span asp-validation-for="JenisAnggota" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IsActive" class="control-label"></label>
+                <select asp-for="IsActive" asp-items="Html.GetEnumSelectList<LRDII.Infrastructure.YesNoType>()" class="form-control">
+                    <option selected="selected" value="">Status anggota ...</option>
+                </select>
+                <span asp-validation-for="IsActive" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="EditMember" asp-route-id="@Model.NomorAnggota">Edit Anggota Lain</a> |
+    <a asp-action="List">Daftar Anggota Koperasi</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -8,6 +8,7 @@
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
+        @*<link href="~/css/main.css" rel="stylesheet" />*@
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -18,27 +19,75 @@
 </head>
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
+        <div class="container-fluid">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">LRDII</a>
+                <a asp-area="" asp-controller="Member" asp-action="Index" class="navbar-brand">LRDII</a>
             </div>
-            <div class="navbar-collapse collapse">
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Anggota <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a asp-area="" asp-controller="Member" asp-action="Create">Tambah</a></li>
+                            <li><a asp-area="" asp-controller="Member" asp-action="EditMember">Edit</a></li>
+                            <li><a asp-area="" asp-controller="Member" asp-action="Search">Cari</a></li>
+                            <li><a asp-area="" asp-controller="Member" asp-action="List">Daftar</a></li>
+                            <li class="divider"></li>
+                            <li><a asp-area="" asp-controller="Member" asp-action="Report">Laporan</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Pinjaman<span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a asp-area="" asp-controller="Loan" asp-action="TakeRepayLoan">Pinjaman/Pengembalian Uang</a></li>
+                            <li><a asp-area="" asp-controller="Loan" asp-action="EditLoan">Edit Pinjaman</a></li>
+                            <li><a asp-area="" asp-controller="Loan" asp-action="EditRepayment">Edit Pengembalian Uang</a></li>
+                            <li class="divider"></li>
+                            <li><a asp-area="" asp-controller="Loan" asp-action="Report">Laporan</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Saham<span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a asp-area="" asp-controller="Share" asp-action="Create">Catat Harga</a></li>
+                            <li><a asp-area="" asp-controller="Share" asp-action="EditShare">Edit Harga</a></li>
+                            <li><a asp-area="" asp-controller="Share" asp-action="List">Daftar Harga</a></li>
+                            <li class="divider"></li>
+                            <li><a asp-area="" asp-controller="Share" asp-action="BuySell">Jual/Beli Saham</a></li>
+                            <li><a asp-area="" asp-controller="Share" asp-action="EditBuy">Edit Transaksi Beli Saham</a></li>
+                            <li><a asp-area="" asp-controller="Share" asp-action="EditSell">Edit Transaksi Jual Saham</a></li>
+
+                            <li class="divider"></li>
+                            <li><a asp-area="" asp-controller="Share" asp-action="Report">Laporan</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <form class="navbar-form navbar-left" role="search">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search">
+                    </div>
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </form>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#">Link</a></li>
                 </ul>
             </div>
         </div>
     </nav>
+  
     <div class="container body-content">
         @RenderBody()
+        <br />
+        <a asp-controller="Member" asp-action="Index">Halaman Utama</a>
         <hr />
         <footer>
             <p>&copy; 2018 - LRDII</p>

@@ -1,0 +1,47 @@
+﻿@model LRDII.Models.LoanRepaymentTransactionModel
+
+<h2>Edit Pinjaman Uang</h2>
+
+<h4>Koperasi LRDII</h4>
+<hr />
+<div class="row">
+    <div class="col-md-8">
+        <form asp-action="EditR">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="NomorPembayaranPinjaman" />
+            <div class="form-group">
+                <label asp-for="NomorPinjaman" class="control-label">Nomor Pinjaman</label>
+                <input asp-for="NomorPinjaman" class="form-control" />
+                <span asp-validation-for="NomorPinjaman" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NomorAnggota" class="control-label">Nomor Anggota</label>
+                <input asp-for="NomorAnggota" class="form-control" />
+                <span asp-validation-for="NomorAnggota" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TanggalTransaksi" class="control-label">Tanggal Transaksi</label>
+                <input asp-for="TanggalTransaksi" class="form-control" />
+                <span asp-validation-for="TanggalTransaksi" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="JumlahPinjamanPokok" class="control-label">Jumlah Pinjaman Pokok</label>
+                <input asp-for="JumlahPinjamanPokok" class="form-control" />
+                <span asp-validation-for="JumlahPinjamanPokok" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="JumlahBungaPinjaman" class="control-label">Jumlah Bunga Pinjaman</label>
+                <input asp-for="JumlahBungaPinjaman" class="form-control" />
+                <span asp-validation-for="JumlahBungaPinjaman" class="text-danger"></span>
+            </div>         
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

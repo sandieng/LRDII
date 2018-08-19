@@ -1,0 +1,27 @@
+﻿@model LRDII.Models.MemberModel
+
+<h2>Laporan</h2>
+
+<h4>Anggota Koperasi LRDII</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="GenerateReport">
+            <div class="form-group">
+                <input type="submit" value="Generate Report" class="btn btn-primary" />
+                @{
+                    if (ViewBag.Report != null)
+                    {
+                        <div>
+                            <span>@ViewBag.Report:  <a href="@ViewBag.Download">@ViewBag.Download</a></span>
+                        </div>
+                    }
+                }
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

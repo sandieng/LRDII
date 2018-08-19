@@ -1,0 +1,105 @@
+﻿@model ReflectionIT.Mvc.Paging.PagingList<LRDII.Models.MemberModel>
+
+@{
+    var memberList = Model.ToList();
+}
+
+<h2>Daftar Anggota Koperasi LRDII</h2>
+
+<p>
+    <a asp-action="Create">Tambah Anggota Baru</a>
+</p>
+
+<form method="post" asp-action="Export" asp-controller="Member">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.NamaLengkap)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.AlamatLengkap)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NomorHp)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.JenisAnggota)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IsActive)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (var i = 0; i < memberList.Count; i++)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => @memberList[i].NamaLengkap)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => @memberList[i].AlamatLengkap)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => @memberList[i].NomorHp)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => @memberList[i].Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => @memberList[i].JenisAnggota)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => @memberList[i].IsActive)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@memberList[i].NomorAnggota">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@memberList[i].NomorAnggota">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@memberList[i].NomorAnggota">Delete</a> |
+                    </td>
+                </tr>
+
+
+            }
+        </tbody>
+    </table>
+
+    @for (var i = 0; i < memberList.Count; i++)
+    {
+        <input type="hidden" name="memberList[@i].Id" value="@memberList[i].NomorAnggota" />
+        <input type="hidden" name="memberList[@i].FullName" value="@memberList[i].NamaLengkap" />
+        <input type="hidden" name="memberList[@i].Address" value="@memberList[i].AlamatLengkap" />
+        <input type="hidden" name="memberList[@i].MobileNumber" value="@memberList[i].NomorHp" />
+        <input type="hidden" name="memberList[@i].Email" value="@memberList[i].Email" />
+        <input type="hidden" name="memberList[@i].MembershipType" value="@memberList[i].JenisAnggota" />
+        <input type="hidden" name="memberList[@i].IsActive" value="@memberList[i].IsActive" />
+    }
+
+    <div class="row">
+        <div class="col-md-8" style="padding-top:10px;">
+            <button class="btn btn-primary">Export to Excel</button>
+            @if (TempData["Download"] != null)
+            {
+                <span>
+                    | Download laporan:
+                    <a href="@TempData["Download"]">@TempData["Download"]</a>
+                </span>
+            }
+        </div>
+    </div>
+</form>
+
+@*<nav aria-label="Daftar Anggota Koperasi">
+        <vc:pager paging-list="@Model" />
+    </nav>*@
+
+
+
+<nav aria-label="Daftar Anggota Koperasi LRDII example">
+    @await this.Component.InvokeAsync("Pager", new { pagingList = this.Model })
+</nav>

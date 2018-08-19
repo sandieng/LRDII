@@ -1,0 +1,33 @@
+﻿@model LRDII.Models.ReportViewModel
+<h2>Laporan Pinjamam/Pengembalian Uang</h2>
+
+<h4>Koperasi LRDII</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="GenerateReport">
+            <div class="form-group">
+                <label asp-for="ReportType" class="control-label"></label>
+                <select asp-for="ReportType" asp-items="Html.GetEnumSelectList<LRDII.Infrastructure.LoanReportType>()">
+                    <option selected="selected" value="">Pilih laporan ...</option>
+                </select>
+                <span asp-validation-for="ReportType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Generate Report" class="btn btn-primary" />
+                @{
+            if (ViewBag.Report != null)
+            {
+                <div>
+                    <span>@ViewBag.Report:  <a href="@ViewBag.Download">@ViewBag.Download</a></span>
+                </div>
+    }
+                }
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

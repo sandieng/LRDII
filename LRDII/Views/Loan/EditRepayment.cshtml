@@ -1,0 +1,31 @@
+﻿@model LRDII.Models.LoanRepaymentTransactionModel
+
+<h2>Edit Pengembalian Pinjaman Uang</h2>
+
+<h4>Koperasi LRDII</h4>
+<hr />
+<div class="row">
+    <div class="col-md-8">
+        <form asp-action="EditRepayment">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="NomorPembayaranPinjaman" class="control-label">Nomor Pembayaran Pinjaman</label>
+                <input asp-for="NomorPembayaranPinjaman" class="form-control" />
+                <span asp-validation-for="NomorPembayaranPinjaman" class="text-danger"></span>
+            </div>
+          
+            <div class="form-group">
+                <input type="submit" value="Edit" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="ClearForm" asp-route-actionname="EditRepayment">Clear Formulir</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,72 @@
+﻿@model ReflectionIT.Mvc.Paging.PagingList<LRDII.Models.SharePriceModel>
+
+@{
+    var shareList = Model.ToList();
+}
+
+<h2>Daftar Harga Saham Koperasi LRDII</h2>
+<p>
+    <a asp-action="Create">Catat Harga Saham</a>
+</p>
+
+<form method="post" asp-action="Export" asp-controller="Share">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.TanggalHarga)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HargaSaham)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (var i = 0; i < shareList.Count; i++)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => @shareList[i].TanggalHarga.Date)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => @shareList[i].HargaSaham)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@shareList[i].NomorHargaSaham">Edit</a> |
+                        <a asp-action="Delete" asp-route-id="@shareList[i].NomorHargaSaham">Delete</a> |
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @for (var i = 0; i < shareList.Count; i++)
+    {
+        <input type="hidden" name="shareList[@i].Id" value="@shareList[i].NomorHargaSaham" />
+        <input type="hidden" name="shareList[@i].FullName" value="@shareList[i].TanggalHarga" />
+        <input type="hidden" name="shareList[@i].Address" value="@shareList[i].HargaSaham" />
+    }
+
+    <div class="row">
+        <div class="col-md-8" style="padding-top:10px;">
+            <button class="btn btn-primary">Export to Excel</button>
+            @if (TempData["Download"] != null)
+            {
+                <span>
+                    | Download laporan:
+                    <a href="@TempData["Download"]">@TempData["Download"]</a>
+                </span>
+            }
+        </div>
+    </div>
+</form>
+
+@*<nav aria-label="Daftar Anggota Koperasi">
+        <vc:pager paging-list="@Model" />
+    </nav>*@
+
+
+
+<nav aria-label="Daftar Anggota Koperasi LRDII example">
+    @await this.Component.InvokeAsync("Pager", new { pagingList = this.Model })
+</nav>

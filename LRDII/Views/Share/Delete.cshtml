@@ -1,0 +1,34 @@
+﻿@model LRDII.Models.SharePriceModel
+
+<h2>Delete</h2>
+
+<div>
+    <h4>Harga Saham Koperasi LRDII</h4>
+    <hr />
+    <div class="row">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.TanggalHarga)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.TanggalHarga.Date)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.HargaSaham)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.HargaSaham)
+            </dd>         
+        </dl>
+
+    </div>
+
+    <br />
+
+</div>
+
+<form asp-action="Delete">
+    <input type="hidden" asp-for="NomorHargaSaham" />
+    <input type="submit" value="Delete" class="btn btn-primary" /> |
+    <a asp-action="List">Daftar Harga Saham Koperasi</a>
+</form>

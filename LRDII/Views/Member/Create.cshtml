@@ -1,0 +1,51 @@
+﻿@model LRDII.Models.MemberModel
+
+<h2>Tambah</h2>
+
+<h4>Anggota Koperasi LRDII</h4>
+<hr />
+<div class="row">
+    <div class="col-md-8">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="NamaLengkap" class="control-label"></label>
+                <input asp-for="NamaLengkap" class="form-control" />
+                <span asp-validation-for="NamaLengkap" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AlamatLengkap" class="control-label"></label>
+                <textarea asp-for="AlamatLengkap" class="form-control" ></textarea>
+                <span asp-validation-for="AlamatLengkap" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NomorHp" class="control-label"></label>
+                <input asp-for="NomorHp" class="form-control" />
+                <span asp-validation-for="NomorHp" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="JenisAnggota" class="control-label"></label>
+                <select asp-for="JenisAnggota" asp-items="Html.GetEnumSelectList<LRDII.Infrastructure.MembershipType>()">
+                    <option selected="selected" value="">Jenis anggota ...</option>
+                </select>
+                <span asp-validation-for="JenisAnggota" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="ClearForm">Clear Formulir</a>   
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

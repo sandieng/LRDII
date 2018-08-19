@@ -1,5 +1,3 @@
-using System;
-
 namespace LRDII.Models
 {
     public class ErrorViewModel

@@ -1,0 +1,125 @@
+﻿@model LRDII.Models.LoanTransactionViewModel
+
+<h2>Pinjaman/Pengembalian Uang</h2>
+
+<h4>Koperasi LRDII</h4>
+<hr />
+<div class="row">
+    <div class="col-md-8">
+        <form asp-action="TakeRepayLoan">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="NomorAnggota" class="control-label"></label>
+                <select asp-for="NomorAnggota" asp-items="@Model.DaftarAnggota">
+                    <option selected="selected" value="">Pilih anggota ...</option>
+                </select>
+                <span asp-validation-for="DaftarAnggota" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="JenisTransaksi" class="control-label"></label>
+                <select asp-for="JenisTransaksi" asp-items="Html.GetEnumSelectList<LRDII.Infrastructure.LoanTransactionType>()" onchange="ShowRelevantLoanDiv()">
+                    <option selected="selected" value="">Jenis transaksi ...</option>
+                </select>
+                <span asp-validation-for="JenisTransaksi" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TanggalTransaksi" class="control-label"></label>
+                <input asp-for="TanggalTransaksi" class="form-control" placeholder="dd/MM/yyyy" />
+                <span asp-validation-for="TanggalTransaksi" class="text-danger"></span>
+            </div>
+
+
+            <div id="TakeLoanDiv" style="display:none">
+                <div class="form-group">
+                    <label asp-for="JumlahPinjaman" class="control-label"></label>
+                    <input asp-for="JumlahPinjaman" class="form-control" placeholder="0" />
+                    <span asp-validation-for="JumlahPinjaman" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PersentaseBunga" class="control-label"></label>
+                    <input asp-for="PersentaseBunga" class="form-control" placeholder="0" />
+                    <span asp-validation-for="PersentaseBunga" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="LamaPinjaman" class="control-label"></label>
+                    <select asp-for="LamaPinjaman" asp-items="Html.GetEnumSelectList<LRDII.Infrastructure.InterestTermType>()">
+                        <option selected="selected" value="">Lama pinjaman ...</option>
+                    </select>
+                    <span asp-validation-for="LamaPinjaman" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div id="RepayLoanDiv" style="display:none">
+                <div class="form-group">
+                    <label asp-for="JumlahPinjamanPokok" class="control-label"></label>
+                    <input asp-for="JumlahPinjamanPokok" class="form-control" placeholder="0" />
+                    <span asp-validation-for="JumlahPinjamanPokok" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="JumlahBungaPinjaman" class="control-label"></label>
+                    <input asp-for="JumlahBungaPinjaman" class="form-control" placeholder="0" />
+                    <span asp-validation-for="JumlahBungaPinjaman" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="NomorPinjaman" class="control-label"></label>
+                    <input asp-for="NomorPinjaman" class="form-control" placeholder="0" />
+                    <span asp-validation-for="NomorPinjaman" class="text-danger"></span>
+                </div>
+                @*<div class="form-group">
+                    <label asp-for="NomorPinjaman" class="control-label"></label>
+                    <select asp-for="NomorPinjaman" asp-items="@Model.DaftarPinjaman">
+                        <option selected="selected" value="">Pilih pinjaman ...</option>
+                    </select>
+                    <span asp-validation-for="NomorPinjaman" class="text-danger"></span>
+                </div>*@
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="ClearForm">Clear Formulir</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        var showTakeLoanDiv = transactionType === '20';
+        $('#TakeLoanDiv').toggle(showTakeLoanDiv);
+        $('#RepayLoanDiv').toggle(!showTakeLoanDiv);
+
+    })
+
+    function ShowRelevantLoanDiv() {
+        var transactionType = $('#JenisTransaksi').val();
+        var showTakeLoanDiv = transactionType === '20';
+        $('#TakeLoanDiv').toggle(showTakeLoanDiv);
+        $('#RepayLoanDiv').toggle(!showTakeLoanDiv);
+
+        // Repayment of loan, get the list of loans for the member to repay
+        //if (!showTakeLoanDiv) {
+        //    fetch('http://localhost:57852/Transaction/GetMemberLoans/' + $('#NomorAnggota').val())
+        //        .then((res) => res.json())
+        //        .then((data) => {                 
+        //            var listID = document.getElementById("DaftarPinjaman");
+        //            for (var i = 0; i < data.length; i++) {
+        //                var opt = document.createElement("option");
+        //                listID.options.add(opt);
+        //                opt.text = data[i].value;
+
+        //            }
+        //            console.log(data)
+        //        })
+        //}
+    }
+</script>

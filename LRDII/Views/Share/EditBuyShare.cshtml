@@ -1,0 +1,39 @@
+﻿@model LRDII.Models.EditShareTransactionViewModel
+
+<h2>Edit Transaksi Pembelian Saham</h2>
+
+<h4>Koperasi LRDII</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="EditBuyShare">
+            <div class="form-group">
+                <label asp-for="NomorAnggota" class="control-label">Nomor Anggota</label>
+                <select asp-for="NomorAnggota" asp-items="@Model.DaftarAnggota" class="form-control">
+                    <option selected="selected" value="">Harga saham ...</option>
+                </select>
+                <span asp-validation-for="NomorAnggota" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="JumlahSaham" class="control-label">Jumlah Saham</label>
+                <input asp-for="JumlahSaham" class="form-control" />
+                <span asp-validation-for="JumlahSaham" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NomorHargaSaham" class="control-label">Nomor Harga Saham</label>
+                <select asp-for="NomorHargaSaham" asp-items="@Model.DaftarHarga" class="form-control">
+                    <option selected="selected" value="">Harga saham ...</option>
+                </select>
+                <span asp-validation-for="NomorHargaSaham" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

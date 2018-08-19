@@ -1,0 +1,25 @@
+﻿@model LRDII.Models.ShareTransactionModel
+
+<h2>Edit Transaksi Pembelian Saham</h2>
+
+<h4>Koperasi LRDII</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="EditBuy">
+            <div class="form-group">
+                <label asp-for="NomorTransaksi" class="control-label">Nomor Transaksi</label>
+                <input asp-for="NomorTransaksi" class="form-control" />
+                <span asp-validation-for="NomorTransaksi" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Edit" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

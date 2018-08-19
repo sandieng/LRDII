@@ -1,0 +1,48 @@
+﻿@model LRDII.Models.LoanTransactionModel
+
+<h2>Edit Pinjaman Uang</h2>
+
+<h4>Koperasi LRDII</h4>
+<hr />
+<div class="row">
+    <div class="col-md-8">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="NomorPinjaman" />
+            <div class="form-group">
+                <label asp-for="NomorAnggota" class="control-label"></label>
+                <input asp-for="NomorAnggota" class="form-control" />
+                <span asp-validation-for="NomorAnggota" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TanggalTransaksi" class="control-label"></label>
+                <input asp-for="TanggalTransaksi" class="form-control" />
+                <span asp-validation-for="TanggalTransaksi" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="JumlahPinjaman" class="control-label"></label>
+                <input asp-for="JumlahPinjaman" class="form-control" />
+                <span asp-validation-for="JumlahPinjaman" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PersentaseBunga" class="control-label"></label>
+                <input asp-for="PersentaseBunga" class="form-control" />
+                <span asp-validation-for="PersentaseBunga" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LamaPinjaman" class="control-label"></label>
+                <select asp-for="LamaPinjaman" asp-items="Html.GetEnumSelectList<LRDII.Infrastructure.InterestTermType>()" class="form-control" >
+                    <option selected="selected" value="">Lama pinjaman ...</option>
+                </select>
+                <span asp-validation-for="LamaPinjaman" class="text-danger"></span>
+            </div>         
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

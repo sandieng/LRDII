@@ -1,0 +1,34 @@
+﻿@model LRDII.Models.SharePriceModel
+
+<h2>Catat Harga Saham</h2>
+
+<h4>Koperasi LRDII</h4>
+<hr />
+<div class="row">
+    <div class="col-md-8">
+        <form asp-action="Create" asp-controller="Share">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="TanggalHarga" class="control-label"></label>
+                <input asp-for="TanggalHarga" class="form-control" placeholder="dd/MM/yyyy" />
+                <span asp-validation-for="TanggalHarga" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HargaSaham" class="control-label"></label>
+                <input asp-for="HargaSaham" class="form-control" />
+                <span asp-validation-for="HargaSaham" class="text-danger"></span>
+            </div>         
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="ClearForm" asp-route-actionname="Create">Clear Formulir</a>   
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

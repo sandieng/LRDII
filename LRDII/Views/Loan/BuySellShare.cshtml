@@ -1,0 +1,56 @@
+﻿@model LRDII.Models.ShareTransactionViewModel
+
+<h2>Jual/Beli</h2>
+
+<h4>Saham Koperasi LRDII</h4>
+<hr />
+<div class="row">
+    <div class="col-md-8">
+        <form asp-action="BuySellShare">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="NomorAnggota" class="control-label"></label>
+                <select asp-for="NomorAnggota" asp-items="@Model.DaftarAnggota">
+                    <option selected="selected" value="">Pilih anggota ...</option>
+                </select>
+                <span asp-validation-for="DaftarAnggota" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="JenisTransaksi" class="control-label"></label>
+                <select asp-for="JenisTransaksi" asp-items="Html.GetEnumSelectList<LRDII.Infrastructure.ShareTransactionType>()">
+                    <option selected="selected" value="">Jenis transaksi ...</option>
+                </select>
+                <span asp-validation-for="JenisTransaksi" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TanggalTransaksi" class="control-label"></label>
+                <input asp-for="TanggalTransaksi" class="form-control" placeholder="dd/MM/yyyy" />
+                <span asp-validation-for="TanggalTransaksi" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="JumlahSaham" class="control-label"></label>
+                <input asp-for="JumlahSaham" class="form-control" placeholder="0" />
+                <span asp-validation-for="JumlahSaham" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NomorHargaSaham" class="control-label"></label>
+                <select asp-for="NomorHargaSaham" asp-items="@Model.DaftarHargaSaham">
+                    <option selected="selected" value="">Pilih harga saham ...</option>
+                </select>
+                <span asp-validation-for="DaftarHargaSaham" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="ClearForm">Clear Formulir</a>   
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
