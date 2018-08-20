@@ -1,4 +1,4 @@
-﻿@model LRDII.Models.LoanTransactionModel
+﻿@model LRDII.Models.LoanTransactionViewModel
 
 <h2>Edit Pinjaman Uang</h2>
 
@@ -11,7 +11,10 @@
             <input type="hidden" asp-for="NomorPinjaman" />
             <div class="form-group">
                 <label asp-for="NomorAnggota" class="control-label"></label>
-                <input asp-for="NomorAnggota" class="form-control" />
+                @*<input asp-for="NomorAnggota" class="form-control" />*@
+                <select asp-for="NomorAnggota" asp-items="@Model.DaftarAnggota">
+                    <option selected="selected" value="">Pilih anggota ...</option>
+                </select>
                 <span asp-validation-for="NomorAnggota" class="text-danger"></span>
             </div>
             <div class="form-group">

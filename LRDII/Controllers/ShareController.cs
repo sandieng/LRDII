@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ReflectionIT.Mvc.Paging;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace LRDII.Controllers
@@ -217,6 +218,26 @@ namespace LRDII.Controllers
             return View(shareTransaction);
         }
 
+        [HttpPost]
+        public IActionResult EditBuyShare(EditShareTransactionViewModel editShareTransaction)
+        {
+            if (!ModelState.IsValid) return View(editShareTransaction);
+
+            if (editShareTransaction.JumlahSaham <= 0)
+            {
+                ModelState.AddModelError("JumlahSaham", "Jumlah saham tidak boleh < 0");
+
+                editShareTransaction.DaftarAnggota = _memberService.GetMembers();
+                editShareTransaction.DaftarHarga = _shareService.GetSharePriceList();
+                return View(editShareTransaction);
+            }
+
+            var updatedShareTransaction = ViewModelMapper.MapViewModelToModel(editShareTransaction, new ShareTransactionModel());
+            _shareTransactionService.Update(updatedShareTransaction);
+
+            return RedirectToAction("EditBuy");
+        }
+
         [HttpGet]
         public IActionResult EditBuy()
         {
@@ -228,9 +249,28 @@ namespace LRDII.Controllers
         {
             var transaction = _shareTransactionService.GetById(shareTransaction.NomorTransaksi);
 
-            if (transaction == null || transaction.JenisTransaksi == ShareTransactionType.JualSaham) return NotFound(shareTransaction);
+            if (transaction == null || transaction.JenisTransaksi == ShareTransactionType.JualSaham)
+            {
+                ModelState.AddModelError("NomorTransaksi", "Nomor transaksi pembelian saham tidak ada");
+                return View(shareTransaction);
+            }
 
             return RedirectToAction("EditBuyShare", new { id = transaction.NomorTransaksi });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Export(List<SharePriceModel> shareList)
+        {
+            var fileName = $"{DateTime.Now.Day.ToString()}_{DateTime.Now.Month.ToString()}_{DateTime.Now.Year.ToString()}.xlsx";
+
+            // Download location from the browser
+            string url = string.Format("{0}://{1}/{2}", Request.Scheme, Request.Host, $"DaftarHargaSaham{fileName}");
+
+            var result = ExportToExcel.Download<SharePriceModel>(_hostingEnvironment.WebRootPath, shareList, $"DaftarHargaSaham{fileName}");
+            TempData["DownLoad"] = url;
+
+            return RedirectToAction(nameof(List));
         }
 
         [HttpGet]

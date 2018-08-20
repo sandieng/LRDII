@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using LRDII.Infrastructure;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.ComponentModel.DataAnnotations;
 
@@ -22,5 +23,8 @@ namespace LRDII.Models
 
         [Display(Name = "Jumlah Saham")]
         public int JumlahSaham { get; set; }
+
+        [Display(Name = "Jenis Transaksi")]
+        public ShareTransactionType JenisTransaksi { get; set; }
     }
 }

@@ -71,12 +71,12 @@
 
     @for (var i = 0; i < memberList.Count; i++)
     {
-        <input type="hidden" name="memberList[@i].Id" value="@memberList[i].NomorAnggota" />
-        <input type="hidden" name="memberList[@i].FullName" value="@memberList[i].NamaLengkap" />
-        <input type="hidden" name="memberList[@i].Address" value="@memberList[i].AlamatLengkap" />
-        <input type="hidden" name="memberList[@i].MobileNumber" value="@memberList[i].NomorHp" />
+        <input type="hidden" name="memberList[@i].NomorAnggota" value="@memberList[i].NomorAnggota" />
+        <input type="hidden" name="memberList[@i].NamaLengkap" value="@memberList[i].NamaLengkap" />
+        <input type="hidden" name="memberList[@i].AlamatLengkap" value="@memberList[i].AlamatLengkap" />
+        <input type="hidden" name="memberList[@i].NomorHp" value="@memberList[i].NomorHp" />
         <input type="hidden" name="memberList[@i].Email" value="@memberList[i].Email" />
-        <input type="hidden" name="memberList[@i].MembershipType" value="@memberList[i].JenisAnggota" />
+        <input type="hidden" name="memberList[@i].JenisAnggota" value="@memberList[i].JenisAnggota" />
         <input type="hidden" name="memberList[@i].IsActive" value="@memberList[i].IsActive" />
     }
 

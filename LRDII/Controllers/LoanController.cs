@@ -117,18 +117,23 @@ namespace LRDII.Controllers
                 return RedirectToAction("EditLoan");
             }
 
-            return View(loanTransaction);
+            var loan = ViewModelMapper.MapViewModelToModel<LoanTransactionModel, LoanTransactionViewModel>(loanTransaction, new LoanTransactionViewModel());
+            loan.DaftarAnggota = _memberService.GetMembers();
+
+            return View(loan);
         }
 
         [HttpPost]
-        public IActionResult Edit(LoanTransactionModel loanTransaction)
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit([Bind("NomorAnggota, NomorPinjaman, PersentaseBunga, JumlahPinjaman, LamaPinjaman")] LoanTransactionViewModel loanTransaction)
         {
             if (!ModelState.IsValid)
             {
                 return View(loanTransaction);
             }
 
-            _loanService.Update(loanTransaction);
+            var updatedLoanTransaction = ViewModelMapper.MapViewModelToModel<LoanTransactionViewModel, LoanTransactionModel>(loanTransaction, new LoanTransactionModel());
+            _loanService.Update(updatedLoanTransaction);
 
             return RedirectToAction("EditLoan");
         }
@@ -140,8 +145,16 @@ namespace LRDII.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult EditLoan(LoanTransactionViewModel loanTransaction)
         {
+            var loan = _loanService.GetById(loanTransaction.NomorPinjaman);
+            if (loan == null)
+            {
+                ModelState.AddModelError("NomorPinjaman", "Nomor pinjaman tidak ada");
+                return View("EditLoan");
+            }
+
             return RedirectToAction("Edit", new { id = loanTransaction.NomorPinjaman });
         }
 
@@ -153,7 +166,7 @@ namespace LRDII.Controllers
             var loanRepaymentTransaction = _loanRepaymentService.GetById(id);
             if (loanRepaymentTransaction == null)
             {
-                ModelState.AddModelError("NomorPinjaman", "Nomor pinjaman tidak ada.");
+                ModelState.AddModelError("NomorPembayaranPinjaman", "Nomor pembayaran pinjaman tidak ada.");
                 return RedirectToAction("EditRepayment");
             }
 
@@ -164,6 +177,21 @@ namespace LRDII.Controllers
         public IActionResult EditR(LoanRepaymentTransactionModel loanRepaymentTransaction)
         {
             if (!ModelState.IsValid)
+            {
+                return View(loanRepaymentTransaction);
+            }
+
+            if (_memberService.GetById(loanRepaymentTransaction.NomorAnggota) == null)
+            {
+                ModelState.AddModelError("NomorAnggota", "Nomor anggota tidak ada");
+            }
+
+            if (_loanService.GetById(loanRepaymentTransaction.NomorPinjaman) == null)
+            {
+                ModelState.AddModelError("NomorPinjaman", "Nomor pinjaman tidak ada");
+            }
+
+            if (ModelState.ErrorCount > 0)
             {
                 return View(loanRepaymentTransaction);
             }
@@ -182,6 +210,14 @@ namespace LRDII.Controllers
         [HttpPost]
         public IActionResult EditRepayment(LoanRepaymentTransactionModel loanRepaymentTransaction)
         {
+            //return RedirectToAction("EditR", new { id = loanRepaymentTransaction.NomorPembayaranPinjaman });
+            var loanRepayment = _loanRepaymentService.GetById(loanRepaymentTransaction.NomorPembayaranPinjaman);
+            if (loanRepayment == null)
+            {
+                ModelState.AddModelError("NomorPembayaranPinjaman", "Nomor pembayaran pinjaman tidak ada");
+                return View("EditRepayment");
+            }
+
             return RedirectToAction("EditR", new { id = loanRepaymentTransaction.NomorPembayaranPinjaman });
         }
 
